@@ -61,14 +61,6 @@ class ExtractFeatures(object):
         # Find not ssl lines in conn.logs that belong to created conn 4 tuples.
         self.conn_logs_2(dataset_path_to_logs)
 
-        print("SSL Lines:", self.ssl_lines)
-        print("Not founded x509 lines:", self.not_founded_x509_lines)
-        print("Not '-' x509 lines:",   self.err_not_added_x509)
-        print("Founded x509 lines:", self.founded_x509_lines)
-
-        # dataset_info = DatasetInformation(self.ssl_lines, self.not_founded_x509_lines, self.err_not_added_x509, self.founded_x509_lines)
-        # self.dataset_inforamtion_dict[dataset_path_to_logs] = dataset_info
-
         self.ssl_lines = 0
         self.not_founded_x509_lines = 0
         self.founded_x509_lines = 0
@@ -104,10 +96,10 @@ class ExtractFeatures(object):
 
                     try:
                         if self.conn_dict[conn_uid]:
-                            print("Error: more same conn line !")
+                            # print("Error: more same conn line !")
+                            pass
                     except:
                         self.conn_dict[conn_uid] = line
-
             f.close()
         except IOError:
             print("Error: The conn file: " + dataset_path_to_conn + " does not exist.")
@@ -116,7 +108,7 @@ class ExtractFeatures(object):
     --------------------- X509 logs. ------------------------
     """
     def x509_logs(self, dataset_path_to_logs):
-        print("<< Read all x509 logs:")
+        # print("<< Read all x509 logs:")
         # Clear x509_dict()
         self.x509_dict = dict()
         all_x509_logs = get_such_logs(dataset_path_to_logs, ['x509'])
@@ -140,7 +132,7 @@ class ExtractFeatures(object):
         try:
             with open(sub_folder + "/start_date.txt") as f:
                 started_unix_time = float(f.readlines()[1])
-                print("     << Started unix time file was read in:", sub_folder)
+                # print("     << Started unix time file was read in:", sub_folder)
             f.close()
             self.reading_time_file.append(sub_folder)
         except IOError:
@@ -180,12 +172,12 @@ class ExtractFeatures(object):
     --------------------- SSL logs. ------------------------
     """
     def ssl_logs(self, dataset_path_to_logs):
-        print("<< Read all ssl logs::")
+        # print("<< Read all ssl logs::")
         self.control_ssl_uids_dict = dict()
         all_ssl_logs = get_such_logs(dataset_path_to_logs, ['ssl'])
         for ssl_log in all_ssl_logs:
             self.create_4_tuples(dataset_path_to_logs + ssl_log)
-        print("     << Loaded ssl logs: ", len(all_ssl_logs))
+        # print("     << Loaded ssl logs: ", len(all_ssl_logs))
         return all_ssl_logs
 
     def create_4_tuples(self, path_to_ssl_log):
@@ -209,9 +201,10 @@ class ExtractFeatures(object):
                             for i in range(0, len(old_ssl_split)):
                                 if i <= 20:
                                     if old_ssl_split[i] != new_ssl_split[i]:
-                                        print("SSL Error - ssl lines with same uid are not same !!!")
-                                        print("     < Path:", path_to_ssl_log)
-                                        print("     < ssl uid:", ssl_uid)
+                                        # print("SSL Error - ssl lines with same uid are not same !!!")
+                                        # print("     < Path:", path_to_ssl_log)
+                                        # print("     < ssl uid:", ssl_uid)
+                                        pass
                             continue
                 except:
                     self.control_ssl_uids_dict[ssl_uid] = ssl_line
@@ -330,14 +323,14 @@ class ExtractFeatures(object):
     '''
 
     def conn_logs_2(self, dataset_path_to_logs):
-        print(" << Read all conn logs again:")
+        # print(" << Read all conn logs again:")
         all_conn_logs = get_such_logs(dataset_path_to_logs, ['conn', '_label'])
         for conn_log in all_conn_logs:
             self.add_not_ssl_logs(dataset_path_to_logs + conn_log)
-        print("     << Loaded conn logs 2: ", len(all_conn_logs))
+        # print("     << Loaded conn logs 2: ", len(all_conn_logs))
 
     def add_not_ssl_logs(self, path_to_conn):
-        print("     <<< adding not ssl flow:")
+        # print("     <<< adding not ssl flow:")
         with open(path_to_conn) as f:
             for line in f:
                 if '#' == line[0]:
@@ -417,7 +410,8 @@ class ExtractFeatures(object):
                     self.certificate_dict[cert_serial].add_server_name(server_name, label)
                     self.certificate_dict[cert_serial].add_x509_line(x509_line)
         except:
-            print("Error: [put_server_name] In ProcessLogs.py x509 does not have this x509uid:", uid_x509)
+            # print("Error: [put_server_name] In ProcessLogs.py x509 does not have this x509uid:", uid_x509)
+            pass
 
 
 def get_such_logs(path_to_logs, part_name_list):

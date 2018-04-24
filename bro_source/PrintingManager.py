@@ -1,3 +1,15 @@
+from termcolor import colored, cprint
+
+
+class bcolors:
+    HEADER = '\033[95m'
+    OKBLUE = '\033[94m'
+    OKGREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
 
 
 class PrintingManager(object):
@@ -10,14 +22,6 @@ class PrintingManager(object):
         self.verbosity = verbosity
         self.space_1 = '    '
         self.space_2 = self.space_1 + self.space_1
-
-        # my approach
-        # print('        _____  _____   ___    ___        ___     ___  _____   ___    ')
-        # print('|    |    |      |    |   \  /   \      |   \   |       |    |       ')
-        # print('|____|    |      |    |___/  \___       |    \  |___    |    |___    ')
-        # print('|    |    |      |    |          \      |    /  |       |    |       ')
-        # print('|    |    |      |    |      \___/      |___/   |___    |    |___        ')
-        # Generated approach
 
         print(' _    _ _______ _______ _____   _____     _____  ______ _______ ______ _____ _______ ____  _____     ')
         print('| |  | |__   __|__   __|  __ \ / ____|   |  __ \|  ____|__   __|  ____/ ____|__   __/ __ \|  __ \    ')
@@ -47,6 +51,17 @@ class PrintingManager(object):
 
 
     def print_detection_result(self):
-        print('len of tuple keys {}'.format(len(self.connection_4_tuples.keys())))
-        # for key in self.connection_4_tuples.keys():
-        #     print(key)
+        print('Number of connection: {}'.format(len(self.connection_4_tuples.keys())))
+        print(colored('Malware: {}'.format(self.malware), 'red', attrs=['reverse', 'blink']))
+        print(colored('Normal: {}'.format(self.normal), 'green', attrs=['reverse', 'blink']))
+        print('')
+        print('-----------------------------------------------------------------------------------')
+        print('{:12s} {:20s} {:20s} {:10s} {:10s} {:10s}'.format('#', 'SrcIP', 'DstIP', 'DstPort', 'Protocol', 'Label'))
+        print('-----------------------------------------------------------------------------------')
+        for i, key in enumerate(sorted(self.result_dict.keys())):
+            s = '{:12s} {:20s} {:20s} {:10s} {:10s} {:10s}'.format(str(i + 1), key[0], key[1], key[2], key[3],
+                                                                   self.result_dict[key])
+            if self.result_dict[key] != 'Normal':
+                print(colored(s, 'red', attrs=['reverse', 'blink']))
+            else:
+                print(colored(s, 'green', attrs=['reverse', 'blink']))

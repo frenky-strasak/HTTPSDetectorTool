@@ -51,10 +51,14 @@ if __name__ == '__main__':
         # print('Bro folder: {}'.format(args.brofolder))
         bro_manager.read_one_capture(args.brofolder, args.verbose)
     elif args.brofolders:
-        print('Bro folders: {}'.format(args.brofolder))
+        # print('Bro folders: {}'.format(args.brofolder))
+        print('It is not implemeted.')
     elif args.suricatajson:
-        print('Suricata : {}'.format(args.brofolder))
+        print('It is not implemeted.')
+        # print('Suricata : {}'.format(args.brofolder))
     elif args.suricatajsons:
-        print('Suricatas : {}'.format(args.brofolder))
+        print('It is not implemeted.')
+        # print('Suricatas : {}'.format(args.brofolder))
     elif args.version:
-        print('{}'.format(__version__))
+        print('It is not implemeted.')
+        # print('{}'.format(__version__))

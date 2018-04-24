@@ -15,6 +15,10 @@ class ComputeFeatures(ExtractFeatures, PrintingManager):
         self.file_time_name = str(datetime.strftime(datetime.now(pytz.utc), "%Y-%m-%d_%H-%M"))
         self.data_model = None
         self.tuples_keys = None
+        self.result_dict = {}
+        self.malware = 0
+        self.normal = 0
+
 
     def add_cert_to_non_cert_conn(self):
         for key in self.connection_4_tuples.keys():
@@ -126,9 +130,6 @@ class ComputeFeatures(ExtractFeatures, PrintingManager):
         self.data_model = self.normalize_data(self.data_model)
 
     def detect(self):
-        # print(len(np.array(self.data_model[0])))
-        # print(np.array(self.data_model[0]))
-        print('Detection')
         clf_xgboost = XGBClassifier()
         booster = Booster()
         booster.load_model('/home/frenky/PycharmProjects/HTTPSDetectorTool/xgboost_2017_09_22.bin')
@@ -137,19 +138,13 @@ class ComputeFeatures(ExtractFeatures, PrintingManager):
         clf_xgboost._le = LabelEncoder().fit([1, 0])
         results = clf_xgboost.predict(np.array(self.data_model))
 
-        malware = 0
-        normal = 0
-        # print('Results:')
+
         for i in range(len(self.tuples_keys)):
             label = ''
             if results[i] == 0:
                 label = 'Normal'
-                normal += 1
+                self.normal += 1
             else:
                 label = 'Suspicious'
-                malware += 1
-            # print('{} - {}'.format(self.tuples_keys[i], label))
-
-        # loaded_model = pickle.load(open('/home/frenky/PycharmProjects/HTTPSDetectorTool/xgboost_2017_09_22.sav', 'rb'))
-        # result = loaded_model.predict(np.array(self.data_model))
-        # print(result)
+                self.malware += 1
+            self.result_dict[self.tuples_keys[i]] = label
