@@ -7,15 +7,20 @@ from .ComputeFeatures import ComputeFeatures
 from .PrintingManager import PrintingManager
 from .ExtractFeatures import ExtractFeatures
 
+
 def read_one_capture(path_to_bro_folder, verbosity):
     t0 = time()
     extract_features = ComputeFeatures()
     # Init hello
     extract_features.init_hello(verbosity)
     # Read Bro data.
-    extract_features.extraction_manager(path_to_bro_folder + '/bro/')
+    exit_code = extract_features.extraction_manager(path_to_bro_folder + '/')
+    # Check if we have needed files.
+    if exit_code < 0:
+        extract_features.print_data_statistic(exit_code)
+        return
     # Print data statistic
-    extract_features.print_data_statistic()
+    extract_features.print_data_statistic(exit_code)
     # Add certificate to connections that does not contain any certificate.
     extract_features.add_cert_to_non_cert_conn()
     # Compute features and save them.

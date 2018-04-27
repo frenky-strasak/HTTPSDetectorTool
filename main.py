@@ -24,9 +24,9 @@ def check_arg():
     parser.add_argument('-V', '--version', help='{}'.format(__version__), action='version',
                         version='{}'.format(__version__))
 
-    parser.add_argument('-b', '--brofolder', help='Path to Bro folder where all log files are.', action='store',
+    parser.add_argument('-b', '--brofolder', help='Path to a folder where all log files are.', action='store',
                         required=False)
-    parser.add_argument('-B', '--brofolders', help='Multiple captures. Path to folder where Bro folders are.',
+    parser.add_argument('-B', '--brofolders', help='Multiple captures. Path to a folder where Bro folders are.',
                         action='store', required=False)
 
     parser.add_argument('-s', '--suricatajson', help='Path to eye.json file.', action='store',

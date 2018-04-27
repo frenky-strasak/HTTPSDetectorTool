@@ -33,21 +33,29 @@ class PrintingManager(object):
         print('\nHTTPS Detector tool. Author: Frantisek Strasak, strasfra@fel.cvut.cz, '
               'verbosity: {}\n'.format(self.verbosity))
 
-    def print_data_statistic(self):
-        if self.verbosity > 0:
-            print("Loaded bro files:")
-            print(self.space_1 + 'conn.log files: {}'.format(len(self.conn_files)))
-            if self.verbosity > 1:
-                for cfile in self.conn_files:
-                    print(self.space_2 + cfile)
-            print(self.space_1 + 'ssl.log files: {}'.format(len(self.ssl_files)))
-            if self.verbosity > 1:
-                for sfile in self.ssl_files:
-                    print(self.space_2 + sfile)
-            print(self.space_1 + 'x509.log files: {}'.format(len(self.x509_files)))
-            if self.verbosity > 1:
-                for xfile in self.x509_files:
-                    print(self.space_2 + xfile)
+    def print_data_statistic(self, exit_code):
+        if exit_code >= 0:
+            if self.verbosity > 0:
+                print("Loaded bro files:")
+                print(self.space_1 + 'conn.log files: {}'.format(len(self.conn_files)))
+                if self.verbosity > 1:
+                    for cfile in self.conn_files:
+                        print(self.space_2 + cfile)
+                print(self.space_1 + 'ssl.log files: {}'.format(len(self.ssl_files)))
+                if self.verbosity > 1:
+                    for sfile in self.ssl_files:
+                        print(self.space_2 + sfile)
+                print(self.space_1 + 'x509.log files: {}'.format(len(self.x509_files)))
+                if self.verbosity > 1:
+                    for xfile in self.x509_files:
+                        print(self.space_2 + xfile)
+        else:
+            if exit_code == -1:
+                print('There is no conn.log files.')
+            elif exit_code == -2:
+                print('Ther is no ssl.log files. Maybe this capture does not contain HTTPS connection.')
+            elif exit_code == -3:
+                print('There is no x509.log files. Maybe this capture does not contain HTTPS connection.')
 
 
     def print_detection_result(self):

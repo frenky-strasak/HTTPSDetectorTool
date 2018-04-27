@@ -3,6 +3,7 @@ from .ConnectionFeatures import ConnectionFeatures
 from .CertificateFeatures import CertificateFeatures
 # from .PrintingManager import PrintingManager
 
+
 class ExtractFeatures(object):
 
     def __init__(self):
@@ -52,10 +53,13 @@ class ExtractFeatures(object):
         self.x509_files = []
 
     def extraction_manager(self, dataset_path_to_logs):
+        # - 1 - no conn files.
+        # - 2 - no ssl files
+        # - 3 - no x509 files.
         # Loads all conn logs in bro folder.
         self.conn_files = self.conn_logs(dataset_path_to_logs)
         # Loads all x509 logs in bro folder.
-        self.x509_files =  self.x509_logs(dataset_path_to_logs)
+        self.x509_files = self.x509_logs(dataset_path_to_logs)
         # Load all ssl logs.
         self.ssl_files = self.ssl_logs(dataset_path_to_logs)
         # Find not ssl lines in conn.logs that belong to created conn 4 tuples.
@@ -65,6 +69,8 @@ class ExtractFeatures(object):
         self.not_founded_x509_lines = 0
         self.founded_x509_lines = 0
         self.err_not_added_x509 = 0
+
+        return verify_files(self.conn_files, self.ssl_files, self.x509_files)
 
     """
     ---------------------- Conn logs. -------------------------
@@ -88,11 +94,6 @@ class ExtractFeatures(object):
                         continue
                     split_conn_line = line.split('	')
                     conn_uid = split_conn_line[1]
-
-                    # label = split_conn_line[21]
-
-                    # if 'Background' in label or 'No_Label' in label:
-                    #     continue
 
                     try:
                         if self.conn_dict[conn_uid]:
@@ -324,7 +325,8 @@ class ExtractFeatures(object):
 
     def conn_logs_2(self, dataset_path_to_logs):
         # print(" << Read all conn logs again:")
-        all_conn_logs = get_such_logs(dataset_path_to_logs, ['conn', '_label'])
+        # all_conn_logs = get_such_logs(dataset_path_to_logs, ['conn', '_label'])
+        all_conn_logs = get_such_logs(dataset_path_to_logs, ['conn'])
         for conn_log in all_conn_logs:
             self.add_not_ssl_logs(dataset_path_to_logs + conn_log)
         # print("     << Loaded conn logs 2: ", len(all_conn_logs))
@@ -421,6 +423,7 @@ def get_such_logs(path_to_logs, part_name_list):
             searched_list.append(searched_file)
     return searched_list
 
+
 def load_root_cert():
     root_cert_arr = []
     with open("./trusted_root_certificates") as f:
@@ -429,6 +432,7 @@ def load_root_cert():
     f.close()
     return root_cert_arr
 
+
 def load_alexa_1000():
     alexa_1000_arr = []
     with open("./alexa_top_1000") as f:
@@ -436,4 +440,14 @@ def load_alexa_1000():
             alexa_1000_arr.append(line.rstrip())
     f.close()
     return alexa_1000_arr
+
+
+def verify_files(conn_files, ssl_files, x509_files):
+    if not conn_files:
+        return -1
+    if not ssl_files:
+        return -2
+    if not x509_files:
+        return -3
+    return 0
 
