@@ -4,6 +4,7 @@ traffic with machine learning techniques.
 
 
 ## ****Installation****
+Tested on (Ubuntu 16.04 x64) and (Kali 2017.1 x64) 
 
 Clone the repository:
 ```
