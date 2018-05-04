@@ -132,7 +132,11 @@ class ComputeFeatures(ExtractFeatures, PrintingManager):
     def detect(self):
         clf_xgboost = XGBClassifier()
         booster = Booster()
-        booster.load_model('/home/frenky/PycharmProjects/HTTPSDetectorTool/xgboost_2017_09_22.bin')
+        # booster.load_model('/home/frenky/PycharmProjects/HTTPSDetectorTool/xgboost_2017_09_22.bin')
+        try:
+            booster.load_model('./xgboost_2017_09_22.bin')
+        except IOError:
+            print('Error: No ML module to read.')
         clf_xgboost._Booster = booster
         # clf_xgboost._le = LabelEncoder().fit(['Malware', 'Normal'])
         clf_xgboost._le = LabelEncoder().fit([1, 0])
