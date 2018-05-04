@@ -132,7 +132,6 @@ class ComputeFeatures(ExtractFeatures, PrintingManager):
     def detect(self):
         clf_xgboost = XGBClassifier()
         booster = Booster()
-        # booster.load_model('/home/frenky/PycharmProjects/HTTPSDetectorTool/xgboost_2017_09_22.bin')
         try:
             booster.load_model('./xgboost_2017_09_22.bin')
         except IOError:
