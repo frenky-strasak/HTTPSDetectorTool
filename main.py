@@ -3,8 +3,10 @@
 
 import argparse
 from bro_source import bro_manager
+from suricata_source import suricata_manager
 
 __version__ = 1.0
+
 
 def check_arg():
 
@@ -38,7 +40,7 @@ def check_arg():
 
     # Check arguments
 
-    if not (args.brofolder or args.brofolders):
+    if not (args.brofolder or args.brofolders or args.suricatajson or args.suricatajsons):
         parser.error('No action requested, see --help')
 
     return args
@@ -55,6 +57,7 @@ if __name__ == '__main__':
         print('It is not implemeted.')
     elif args.suricatajson:
         print('It is not implemeted.')
+        # suricata_manager.read_one_capture(args.suricatajson, args.verbose)
         # print('Suricata : {}'.format(args.brofolder))
     elif args.suricatajsons:
         print('It is not implemeted.')
