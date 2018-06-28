@@ -169,6 +169,7 @@ class ExtractFeatures(object):
         except IOError:
             print("Error: The x509 file: " + dataset_path_to_logs + x509_log + " does not exist.")
 
+
     """
     --------------------- SSL logs. ------------------------
     """
@@ -222,31 +223,7 @@ class ExtractFeatures(object):
                 # 2-srcIpAddress, 4-dstIpAddress, 5-dstPort, 6-Protocol
                 connection_index = conn_split[2], conn_split[4], conn_split[5], conn_split[6]
 
-                # try:
-                #     label = conn_split[21]
-                # except IndexError:
-                #     print("Error: no label in conn line.")
-
                 label = "NONE"
-
-                # if 'Background' in label or 'No_Label' in label:
-                #     print "Error: Backgroung label."
-                #     continue
-                #
-                # if not ('Botnet' in label) and not ('Normal') in label:
-                #     print "Error: Dear more, there are more states of labels !!!!"
-
-                # Save ips to dict
-                # if 'Normal' in label:
-                #     try:
-                #         self.normal_src_IP_dict[conn_split[2]] += 1
-                #     except:
-                #         self.normal_src_IP_dict[conn_split[2]] = 1
-                # if 'Botnet' in label:
-                #     try:
-                #         self.malware_src_IP_dict[conn_split[2]] += 1
-                #     except:
-                #         self.malware_src_IP_dict[conn_split[2]] = 1
 
                 try:
                     self.connection_4_tuples[connection_index].add_ssl_flow(conn_log, label)

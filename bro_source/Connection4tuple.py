@@ -144,7 +144,7 @@ class Connection4tuple(object):
         split = flow.split('	')
         try:
             self.uid_flow_dict[split[1]] += 1
-            print("Error: more same conn uids in compute_ssl_features function !!!!!")
+            # print("Error: more same conn uids in compute_ssl_features function !!!!!")
         except:
             self.uid_flow_dict[split[1]] = 1
         # Add state of connection to dict.
@@ -162,12 +162,13 @@ class Connection4tuple(object):
         try:
             self.inbound_packtes += int(split[18])
         except:
-            print("Error: resp pckts has bad formats.")
+            # print("Error: resp pckts has bad formats.")
+            pass
         try:
             self.outbound_packtes += int(split[16])
         except:
-            print("Error: resp pckts has bad formats.")
-
+            # print("Error: resp pckts has bad formats.")
+            pass
         # perodicity
         # current_time = float(split[0])
 
@@ -214,7 +215,7 @@ class Connection4tuple(object):
                 socket.inet_aton(server_name)
                 if self.SNI_equal_DstIP != -1:
                     dstIP = self.tuple_index[1]
-                    print("Watch out: We have SNI as ip:", server_name, "and dst ip is:", dstIP)
+                    # print("Watch out: We have SNI as ip:", server_name, "and dst ip is:", dstIP)
                     if dstIP != server_name:
                         self.SNI_equal_DstIP = -1
                     else:
@@ -228,8 +229,8 @@ class Connection4tuple(object):
                         is_tld = True
                         break
                 if is_tld is False:
-                    print("Watch out: This ssl line has server name without TOP-LEVEL-DOMAIN.")
-                    print("It is: ", server_name)
+                    # print("Watch out: This ssl line has server name without TOP-LEVEL-DOMAIN.")
+                    # print("It is: ", server_name)
                     self.top_level_domain_error += 1
 
 
@@ -271,7 +272,8 @@ class Connection4tuple(object):
                 current_time_norm = current_time - before_date  # 12025263
                 self.cert_percent_validity.append(current_time_norm / norm_after)
             except:
-                print("Certificate time length is broken.")
+                # print("Certificate time length is broken.")
+                pass
 
         # certificate info
         # if certifcate is not alredy here
@@ -342,13 +344,15 @@ class Connection4tuple(object):
             orig_bytes_number = int(orig_bytes)
         except:
             if orig_bytes != '-':
-                print("Error: orig_bytes has bad format.")
+                # print("Error: orig_bytes has bad format.")
+                pass
             orig_bytes_number = 0
         try:
             resp_bytes_number = int(resp_bytes)
         except:
             if resp_bytes != '-':
-                print("Error: resp_bytes has bad format.")
+                # print("Error: resp_bytes has bad format.")
+                pass
             resp_bytes_number = 0
         self.total_size_of_flows_orig += orig_bytes_number
         self.total_size_of_flows_resp += resp_bytes_number
@@ -604,4 +608,5 @@ class Connection4tuple(object):
     """
     def check_zero_dividing(self, number, text):
         if number == 0:
-            print(text)
+            # print(text)
+            pass

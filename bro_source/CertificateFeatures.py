@@ -50,10 +50,11 @@ class CertificateFeatures:
 
     def is_malware(self):
         if self.malware_labels != 0 and self.normal_labels != 0:
-            print("Error: There are more malwares and more normals! Cert serial:", self.cert_serial)
-            print("     " + "malwares:", self.malware_labels, "normals", self.normal_labels)
-            print("     " + "SNI:")
-            print(self.servernames_dict.keys())
+            # print("Error: There are more malwares and more normals! Cert serial:", self.cert_serial)
+            # print("     " + "malwares:", self.malware_labels, "normals", self.normal_labels)
+            # print("     " + "SNI:")
+            # print(self.servernames_dict.keys())
+            pass
 
         if self.malware_labels > self.normal_labels:
             return True
@@ -78,8 +79,8 @@ class CertificateFeatures:
 
                 self.number_x509_lines += 1
             except:
-                print("Certificate time length is broken.")
-
+                # print("Certificate time length is broken.")
+                pass
     def is_CN_in_SAN(self, x509_line):
         x509_split = x509_line.split('	')
         if x509_split[14] != '-':

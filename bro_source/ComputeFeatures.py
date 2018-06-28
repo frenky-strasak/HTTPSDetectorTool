@@ -36,7 +36,7 @@ class ComputeFeatures(ExtractFeatures, PrintingManager):
                             x509_line = self.certificate_dict[cert_serial].contain_server_name(server_name)
                             if x509_line != 0:
                                 self.connection_4_tuples[key].add_ssl_log_2(x509_line)
-                                print("This Certificate was added after process:", "cert_serial:", cert_serial, "server_name=",server_name, "4-tuple=", key, "label:", self.connection_4_tuples[key].get_label_of_connection())
+                                # print("This Certificate was added after process:", "cert_serial:", cert_serial, "server_name=",server_name, "4-tuple=", key, "label:", self.connection_4_tuples[key].get_label_of_connection())
                                 break_v = 1
                                 break
                         if break_v == 1:

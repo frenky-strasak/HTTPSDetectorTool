@@ -185,8 +185,8 @@ class ConnectionFeatures(Connection4tuple):
     # certificate_valid_number = number of certificate*
     def get_average_of_certificate_length(self):
         if self.certificate_valid_number != 0:
-            if numpy.mean(self.temp_list) != self.certificate_valid_length / float(self.certificate_valid_number):
-                print("Error: numpy mean and mean by hand are not same.")
+            # if numpy.mean(self.temp_list) != self.certificate_valid_length / float(self.certificate_valid_number):
+                # print("Error: numpy mean and mean by hand are not same.")
             return self.certificate_valid_length / float(self.certificate_valid_number)
         return -1
 
