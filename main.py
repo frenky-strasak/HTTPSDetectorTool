@@ -19,7 +19,7 @@ def check_arg():
 
     # Parse the parameters
     parser = argparse.ArgumentParser(description="Program HTTPS Detector tool version {}. Author: "
-                                                 "Frantisek Strasak, strasfra@fel.cvut.cz".format(__version__),
+                                                 "Frantisek Strasak, strasfra@fel.cvut.cz. Sebastian Garcia".format(__version__),
                                      usage='%(prog)s -n <screen_name> [options]')
     parser.add_argument('-v', '--verbose', help='0-no verbosity, 1-middle verbosity, 2-high verbosity (default is 1)',
                         action='store', default=1, required=False, type=int)
