@@ -82,6 +82,8 @@ class ExtractFeatures(object):
         # all_conn_logs = get_such_logs(dataset_path_to_logs, ['conn', '_label'])
         all_conn_logs = get_such_logs(dataset_path_to_logs, ['conn'])
         for conn_log in all_conn_logs:
+            if 'label' in conn_log or 'summary' in conn_log:
+                continue
             self.read_conn_log(dataset_path_to_logs + conn_log)
         # print("     << Loaded conn logs: ", len(all_conn_logs))
         return all_conn_logs
