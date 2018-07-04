@@ -3,7 +3,7 @@
 
 import argparse
 from bro_source import bro_manager
-from suricata_source import suricata_manager
+# from suricata_source import suricata_manager
 
 __version__ = 1.0
 
