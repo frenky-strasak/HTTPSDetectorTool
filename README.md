@@ -32,3 +32,14 @@ Run the program:
 ```
 python main.py --help 
 ```
+
+## 
+Time format
+
+If your bro data has started time of the capturing from 0 (it means from 1 January 1970), please put text file 
+with name "start_date.txt" one level directory higher. Example:
+```
+/home/data/my_capture/bro/con.log
+/home/data/my_capture/start_date.txt
+```
+The file will contain one number in one line representing date in unix time.
